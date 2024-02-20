@@ -27,17 +27,10 @@ resource "aws_security_group" "public" {
   }
 }
 
-# Creating private secrurity group with no inbound access for now.
+# Creating private secrurity group with no inbound outbound access for now.
 resource "aws_security_group" "private" {
   name        = "${var.env}-private-sg"
-  description = "Only ssh for now"
+  description = "No access for now"
   vpc_id      = var.vpc_id
-  egress {
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-    protocol         = "-1"
-    from_port        = 0
-    to_port          = 0
-  }
 }
 
