@@ -7,7 +7,6 @@ resource "aws_instance" "public" {
   subnet_id                   = var.public_subnet_ids[count.index]
   vpc_security_group_ids      = [aws_security_group.public.id]
   associate_public_ip_address = true
-  # depends_on                  = [aws_s3_bucket.this]
   tags = {
     Name = "${var.env}-public-${count.index}"
   }
@@ -31,7 +30,6 @@ resource "aws_instance" "private" {
   subnet_id                   = var.private_subnet_ids[count.index]
   vpc_security_group_ids      = [aws_security_group.private.id]
   associate_public_ip_address = false
-  # depends_on                  = [aws_s3_bucket.this]
   tags = {
     Name = "${var.env}-private-${count.index}"
   }
