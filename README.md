@@ -110,7 +110,7 @@ terragrunt run-all apply
         `s3:GetBucketPolicy`,
         `s3:GetBucketPublicAccessBlock`,
         `s3:PutLifecycleConfiguration`,
-        `s3:PutBucketOwnershipControls`
+        `s3:PutBucketOwnershipControls` and set the resource to s3 bucket arn created (s3_w_r_t).
         ![alt text](./images/s3_w_r_t_json_2.png)
    4. Create Policy (Dynamo_w_r_t) give access to `dynamodb:DescribeTable`, `dynamodb:GetItem`, `dynamodb:CreateTable`, `dynamodb:PutItem` and `dynamodb:DeleteItem` and set resource as dynamoDB table's arn.
     ![dynamodb json](./images/dynamoDB_w_r_t_json.png)
