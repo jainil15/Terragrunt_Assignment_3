@@ -2,6 +2,8 @@
 
 **Objective: Set up Terraform configurations for different environments (e.g., dev, staging, prod) using Terragrunt.**
 
+Introduction: In each environment—development, staging, and production—I establish a robust infrastructure by meticulously configuring Virtual Private Clouds (VPCs) along with private and public subnets. Within these carefully crafted environments, I deploy both private and public EC2 instances, ensuring a secure and efficient setup tailored to the specific needs of each stage of development.
+
 ## Managing Multiple Environments with Terragrunt
 
 **Introduction**
@@ -279,3 +281,19 @@ terragrunt run-all apply
 | public_subnet_ids                  | `dependency.vpc.outputs.public_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | vpc_id                             | `dependency.vpc.outputs.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
+
+
+**Terragrunt Steps**
+1. **`terragrunt run-all init`:** This command initializes Terraform configurations across multiple directories, ensuring consistent setup and dependencies
+![terragrunt_init_1.png](./images/terragrunt_init_1.png)
+![terragrunt_init_2.png](./images/terragrunt_init_2.png)
+2. **`terragrunt run-all plan`:** This command generates execution plans for Terraform configurations in multiple directories, facilitating infrastructure changes preview.
+![terragrunt_plan_all_1.png](./images/terragrunt_plan_all_1.png)
+![terragrunt_plan_all_2.png](./images/terragrunt_plan_all_2.png)
+
+3. **`terragrunt run-all apply`:** This command applies Terraform configurations across multiple directories, deploying infrastructure changes consistently and efficiently.
+![terragrunt_apply_1.png](./images/terragrunt_apply_1.png)
+![terragrunt_apply_2.png](./images/terragrunt_apply_2.png)
+![aws_vpc_all_1.png](./images/aws_vpc_all_1.png)
+![aws_subnet_all_1.png](a./images/ws_subnet_all_1.png)
+![ec2_instances_all_1.png](./images/ec2_instances_all_1.png)
