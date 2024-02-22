@@ -296,5 +296,5 @@ terragrunt run-all apply
 ![terragrunt_apply_1.png](./images/terragrunt_apply_1.png)
 ![terragrunt_apply_2.png](./images/terragrunt_apply_2.png)
 ![aws_vpc_all_1.png](./images/aws_vpc_all_1.png)
-![aws_subnet_all_1.png](a./images/ws_subnet_all_1.png)
+![aws_subnet_all_1.png](./images/ws_subnet_all_1.png)
 ![ec2_instances_all_1.png](./images/ec2_instances_all_1.png)
