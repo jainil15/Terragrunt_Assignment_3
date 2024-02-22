@@ -6,13 +6,13 @@ Introduction: In each environment—development, staging, and production—I est
 
 ## Managing Multiple Environments with Terragrunt
 
-**Introduction**
+#### **Introduction**
 
 Terragrunt is a thin wrapper for Terraform that provides extra tools for keeping your configurations DRY, working with multiple Terraform modules, and managing remote state.
 
-Simplifying Multiple Environments Management
+**Simplifying Multiple Environments Management:**
 
-**Terragrunt simplifies managing multiple environments (such as development, staging, and production) by allowing you to:**
+- **Terragrunt simplifies managing multiple environments (such as development, staging, and production) by allowing you to:**
 
   - **Keep configurations DRY:** Terragrunt allows you to keep your Terraform configurations DRY (Don't Repeat Yourself) by using configuration inheritance. This means you can define common configurations once and reuse them across multiple environments.
 
@@ -20,13 +20,13 @@ Simplifying Multiple Environments Management
 
   - **Manage remote state:** Terragrunt provides built-in support for managing remote state, making it easy to store your Terraform state in a centralized location (e.g., an S3 bucket) and share it across your team.
 
-**Organize Your Project**: Organize your project directory structure to separate configurations for each environment. For example:
+- **Organize Your Project**: Organize your project directory structure to separate configurations for each environment. For example:
 
-**Use Terragrunt Configuration:** In each environment directory, create a terragrunt.hcl file to specify Terragrunt configuration, such as remote state settings, backend configuration, and any other Terragrunt-specific settings.
+- **Use Terragrunt Configuration:** In each environment directory, create a terragrunt.hcl file to specify Terragrunt configuration, such as remote state settings, backend configuration, and any other Terragrunt-specific settings.
 
-**Deploy Environment:** To deploy a specific environment, navigate to its directory and run Terragrunt commands such as terragrunt init, terragrunt plan, and terragrunt apply. 
+- **Deploy Environment:** To deploy a specific environment, navigate to its directory and run Terragrunt commands such as terragrunt init, terragrunt plan, and terragrunt apply. 
 
-Following is the dir structure:
+#### **Following is the dir structure:**
 <pre>
 environments
   │   terragrunt.hcl
