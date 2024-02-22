@@ -1,6 +1,6 @@
 # Assignment 3
 
-**Objective: Set up Terraform configurations for different environments (e.g., dev, staging, prod) using Terragrunt.**
+## **Objective: Set up Terraform configurations for different environments (e.g., dev, staging, prod) using Terragrunt.**
 
 Introduction: In each environment—development, staging, and production—I establish a robust infrastructure by meticulously configuring Virtual Private Clouds (VPCs) along with private and public subnets. Within these carefully crafted environments, I deploy both private and public EC2 instances, ensuring a secure and efficient setup tailored to the specific needs of each stage of development.
 
