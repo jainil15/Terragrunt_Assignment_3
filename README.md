@@ -14,11 +14,11 @@ Terragrunt is a thin wrapper for Terraform that provides extra tools for keeping
 
 - **Terragrunt simplifies managing multiple environments (such as development, staging, and production) by allowing you to:**
 
-  - **Keep configurations DRY:** Terragrunt allows you to keep your Terraform configurations DRY (Don't Repeat Yourself) by using configuration inheritance. This means you can define common configurations once and reuse them across multiple environments.
+- **Keep configurations DRY:** Terragrunt allows you to keep your Terraform configurations DRY (Don't Repeat Yourself) by using configuration inheritance. This means you can define common configurations once and reuse them across multiple environments.
 
-  - **Work with multiple Terraform modules:** Terragrunt supports managing multiple Terraform modules in a single repository or across multiple repositories. This allows you to break down your infrastructure into smaller, manageable modules and reuse them across different environments.
+- **Work with multiple Terraform modules:** Terragrunt supports managing multiple Terraform modules in a single repository or across multiple repositories. This allows you to break down your infrastructure into smaller, manageable modules and reuse them across different environments.
 
-  - **Manage remote state:** Terragrunt provides built-in support for managing remote state, making it easy to store your Terraform state in a centralized location (e.g., an S3 bucket) and share it across your team.
+- **Manage remote state:** Terragrunt provides built-in support for managing remote state, making it easy to store your Terraform state in a centralized location (e.g., an S3 bucket) and share it across your team.
 
 - **Organize Your Project**: Organize your project directory structure to separate configurations for each environment. For example:
 
