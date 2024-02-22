@@ -9,7 +9,9 @@ remote_state {
 		region = "ap-south-1"
 		encrypt = true
 		profile = "terra-user"
-		role_arn = "arn:aws:iam::171358186705:role/terraform"
+		assume_role = {
+      role_arn = "arn:aws:iam::171358186705:role/terraform"
+    }
 		dynamodb_table = "jainil-terraform-lock-table"
 		key = "${path_relative_to_include()}/terraform.tfstate"
 	}
@@ -22,11 +24,6 @@ generate "provider" {
 	contents = <<EOF
 provider "aws" {
 	region = "ap-south-1"
-	profile = "terra-user"
-	assume_role {
-		session_name = "terraform-assignment"
-		role_arn = "arn:aws:iam::171358186705:role/terraform"
-	}
 }
 EOF
 }

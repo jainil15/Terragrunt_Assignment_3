@@ -24,5 +24,5 @@ inputs = {
   private_subnet_tags = {
     Description = "This is a private subnet not connected to the internet gateway"
   }
-  ssh_secure_ip = ["110.11.124.123/32"]
+
 }

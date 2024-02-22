@@ -10,6 +10,9 @@ resource "aws_instance" "public" {
   tags = {
     Name = "${var.env}-public-${count.index}"
   }
+
+  # depends_on = [ var.s3_id ] // dependency on s3\
+  
   user_data = <<EOF
 #!bin/bash
 yum update -y
@@ -21,7 +24,7 @@ systemctl restart httpd
   EOF
 }
 
-# Creating private aws ec2 instance for what purpose?? Talking to RDS??
+# Creating private aws ec2 instance
 resource "aws_instance" "private" {
   count                       = length(var.private_subnet_ids)
   ami                         = var.ami_id
@@ -33,4 +36,5 @@ resource "aws_instance" "private" {
   tags = {
     Name = "${var.env}-private-${count.index}"
   }
+  # depends_on = [ var.s3_id ] // dependency on s3
 }

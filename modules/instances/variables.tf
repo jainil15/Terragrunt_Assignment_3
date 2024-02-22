@@ -1,6 +1,6 @@
 variable "env" {
   type        = string
-  description = "Name of the environment"
+  description = "Environment Name"
 }
 
 variable "ami_id" {
@@ -11,22 +11,80 @@ variable "ami_id" {
 variable "instance_type" {
   type        = string
   description = "Instance type of instance"
-}
-
-variable "ssh_secure_ip" {
-  type        = list(string)
-  description = "Pass IP address that are allowed to connect to the ec2 instance using ssh protocol"
+  default     = "t2.micro"
 }
 
 variable "private_subnet_ids" {
-  type = list(string)
+  type        = list(string)
+  description = "List of private subnet ids"
 }
 
 variable "public_subnet_ids" {
-  type = list(string)
+  type        = list(string)
+  description = "List of public subnet ids"
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "VPC ID"
 }
+
+variable "public_sg_ingress_with_cidr_blocks" {
+  type = list(object({
+    from_port        = number
+    to_port          = number
+    protocol         = string
+    cidr_blocks      = list(string)
+    ipv6_cidr_blocks = optional(list(string))
+  }))
+  default     = []
+  description = "Full ingress blocks with cidr blocks, to_port, from_port, protocol, ipv6_cidr_blocks(optional)"
+}
+
+variable "public_sg_egress_with_cidr_blocks" {
+  type = list(object({
+    from_port        = number
+    to_port          = number
+    protocol         = string
+    cidr_blocks      = list(string)
+    ipv6_cidr_blocks = optional(list(string))
+  }))
+  description = "Full engress blocks with cidr blocks, to_port, from_port, protocol, ipv6_cidr_blocks(optional)"
+  default = [{
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }]
+}
+
+variable "private_sg_ingress_with_cidr_blocks" {
+  type = list(object({
+    from_port        = number
+    to_port          = number
+    protocol         = string
+    cidr_blocks      = list(string)
+    ipv6_cidr_blocks = optional(list(string))
+  }))
+  default     = []
+  description = "Full ingress blocks with cidr blocks, to_port, from_port, protocol, ipv6_cidr_blocks(optional)"
+}
+
+variable "private_sg_egress_with_cidr_blocks" {
+  type = list(object({
+    from_port        = number
+    to_port          = number
+    protocol         = string
+    cidr_blocks      = list(string)
+    ipv6_cidr_blocks = optional(list(string))
+  }))
+  default     = []
+  description = "Full ingress blocks with cidr blocks, to_port, from_port, protocol, ipv6_cidr_blocks(optional)"
+
+}
+
+# variable "s3_id" {
+#   type = string
+#   description = "S3 id for ec2 dependency"
+# }

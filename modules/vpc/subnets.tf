@@ -1,4 +1,3 @@
-
 # Creating private subnet
 resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidr_blocks)
@@ -9,7 +8,6 @@ resource "aws_subnet" "private" {
     { Name = "${var.env}-private-${var.azs[count.index]}" },
     var.private_subnet_tags
   )
-
 }
 
 # Creating public subnet
@@ -22,5 +20,4 @@ resource "aws_subnet" "public" {
     { Name = "${var.env}-public-${var.azs[count.index]}" },
     var.public_subnet_tags
   )
-
 }
