@@ -187,7 +187,42 @@ terragrunt run-all apply
 | private_instance_id | Private ec2 instance id   |
 
 
+## /dev/ Inputs
+
+### /env.hcl Locals
+|Name|Value|
+|--|--|
+|env|"dev"|
+### /vpc/terragrunt.hcl Inputs:
+| Name                       | Input               |
+|----------------------------|---------------------|
+| env                        | `include.env.locals.env`         |
+| azs                        | `["ap-south-1a"]`   |
+| vpc_cidr_block             | `"124.22.0.0/16" `   |
+| private_subnet_cidr_blocks | `["124.22.0.64/26"]` |
+| public_subnet_cidr_blocks  | `["124.22.2.64/26"]` |
+| private_subnet_tags        | `{    Description = "This is a public subnet connected to internet gateway"  }`                |
+| public_subnet_tags         | `{    Description = "This is a private subnet not connected to the internet gateway"  }`                |
+
+
+### /instances/terragrunt.hcl Inputs:
+
+| Name                               | Input                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| env                                | `include.env.locals.env`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ami_id                             | `"ami-06b72b3b2a773be2b"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| instance_type                      | `"t2.micro"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| private_subnet_ids                 | `dependency.vpc.outputs.private_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| public_subnet_ids                  | `dependency.vpc.outputs.public_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| vpc_id                             | `dependency.vpc.outputs.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
+
 ## /prod/ Inputs
+
+### /env.hcl Locals
+|Name|Value|
+|--|--|
+|env|"prod"|
 
 ## /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
@@ -213,9 +248,12 @@ terragrunt run-all apply
 | vpc_id                             | `dependency.vpc.outputs.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
 
-## /dev Inputs
-
-## /vpc/terragrunt.hcl Inputs:
+## /staging Inputs
+### /env.hcl Locals
+|Name|Value|
+|--|--|
+|env|"staging"|
+### /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
 |----------------------------|---------------------|
 | env                        | `include.env.locals.env`         |
@@ -227,7 +265,7 @@ terragrunt run-all apply
 | public_subnet_tags         | `{    Description = "This is a private subnet not connected to the internet gateway"  }`                |
 
 
-### Instances Inputs:
+### /instances/terragrunt.hcl Inputs:
 
 | Name                               | Input                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
