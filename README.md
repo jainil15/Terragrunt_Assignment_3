@@ -109,7 +109,9 @@ terragrunt run-all apply
         `s3:GetBucketPublicAccessBlock`,
         `s3:PutLifecycleConfiguration`,
         `s3:PutBucketOwnershipControls`
+        ![alt text](./images/s3_w_r_t_json_2.png)
    4. Create Policy (Dynamo_w_r_t) give access to `dynamodb:DescribeTable`, `dynamodb:GetItem`, `dynamodb:CreateTable`, `dynamodb:PutItem` and `dynamodb:DeleteItem` and set resource as dynamoDB table's arn.
+    ![dynamodb json](./images/dynamoDB_w_r_t_json.png)
    5. Create New Role (named terraform) and attach 2 policies (Dynamo_w_r_t and S3_w_r_t) created in the previous step.![terraform_role_show_policies.png](./images/terraform_role_show_policies.png)
    6. Now create a new Policy (Allow-Terraform) and provide allow it to assume role of terraform.![Allow_terraform_json.png](./images/Allow_terraform_json.png)
    7. Now create a new User-group (named terraform-access) and attach policy (Allow-Terraform) created in the previous step.![terraform-access-permissions.png](./images/terrafom-access-permissions.png)
@@ -192,7 +194,7 @@ terragrunt run-all apply
 ### /env.hcl Locals
 |Name|Value|
 |--|--|
-|env|"dev"|
+|env|`"dev"`|
 ### /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
 |----------------------------|---------------------|
@@ -222,7 +224,7 @@ terragrunt run-all apply
 ### /env.hcl Locals
 |Name|Value|
 |--|--|
-|env|"prod"|
+|env|`"prod"`|
 
 ## /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
@@ -249,10 +251,11 @@ terragrunt run-all apply
 | public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
 
 ## /staging Inputs
+
 ### /env.hcl Locals
 |Name|Value|
 |--|--|
-|env|"staging"|
+|env|`"staging"`|
 ### /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
 |----------------------------|---------------------|
