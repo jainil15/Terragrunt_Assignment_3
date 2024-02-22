@@ -298,3 +298,7 @@ terragrunt run-all apply
 ![aws_vpc_all_1.png](./images/aws_vpc_all_1.png)
 ![aws_subnet_all_1.png](./images/aws_subnet_all_1.png)
 ![ec2_instances_all_1.png](./images/ec2_instances_all_1.png)
+
+**Backend:**
+![backend_terragrunt_all_1](./images/backend_terragrunt_all_1.png)
+   
