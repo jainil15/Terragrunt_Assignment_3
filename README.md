@@ -283,7 +283,7 @@ terragrunt run-all apply
 | public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
 
 
-**Run the following Terragrunt Commands:**
+#### **Run the following Terragrunt Commands:**
 1. **`terragrunt run-all init`:** This command initializes Terraform configurations across multiple directories, ensuring consistent setup and dependencies
 ![terragrunt_init_1.png](./images/terragrunt_init_1.png)
 ![terragrunt_init_2.png](./images/terragrunt_init_2.png)
