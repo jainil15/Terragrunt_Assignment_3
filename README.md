@@ -116,19 +116,6 @@ terragrunt run-all apply
    8. Now create a new user (named terra-user) and add it to user group (terraform-access) created in previous step.![terra-user_show_group.png](./images/terra-user_show_group.png)
 
 
-## Backend config in terragrunt.hcl in /environment:
-
-| Name           | Value                                      |
-|----------------|--------------------------------------------|
-| bucket         | "jainil-terraform-backend"    |
-| region         | "ap-south-1"                               |
-| encrypt        | true                                       |
-| profile        | "terra-user"                               |
-| role_arn       | "arn:aws:iam::171358186705:role/terraform" |
-| dynamodb_table | "jainil-terraform-lock-table"              |
-| key            | "assignment-1/test/terraform.tfstate"      |
-
-
 ## VPC Module:
 
 ### Resources:
@@ -199,36 +186,55 @@ terragrunt run-all apply
 | public_instance_id  | Public ec2 instance id    |
 | private_instance_id | Private ec2 instance id   |
 
-## main.tf Configurations:
 
-### Local Variables:
+## /prod/ Inputs
 
-| Name | Value  |
-|------|--------|
-| env  | `test` |
-
-### VPC Inputs:
-
+## /vpc/terragrunt.hcl Inputs:
 | Name                       | Input               |
 |----------------------------|---------------------|
-| env                        | `local.env`         |
-| azs                        | `["ap-south-1a"]`   |
-| vpc_cidr_block             | `"77.23.0.0/16" `   |
-| private_subnet_cidr_blocks | `["77.23.0.64/26"]` |
-| public_subnet_cidr_blocks  | `["77.23.2.64/26"]` |
-| private_subnet_tags        | `{}`                |
-| public_subnet_tags         | `{}`                |
+| env                        | `include.env.locals.env`         |
+| azs                        | `["ap-south-1a", "ap-south-1b", "ap-south-1b"]`   |
+| vpc_cidr_block             | `"125.22.0.0/16" `   |
+| private_subnet_cidr_blocks | `["125.22.0.64/26", "125.22.0.128/26", "125.22.0.192/26"]` |
+| public_subnet_cidr_blocks  | `["125.22.2.64/26", "125.22.2.128/26", "125.22.2.192/26"]` |
+| private_subnet_tags        | `{    Description = "This is a public subnet connected to internet gateway"  }`                |
+| public_subnet_tags         | `{    Description = "This is a private subnet not connected to the internet gateway"  }`                |
+
+
+### /instances/terragrunt.hcl Inputs:
+
+| Name                               | Input                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| env                                | `include.env.locals.env`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ami_id                             | `"ami-06b72b3b2a773be2b"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| instance_type                      | `"t2.micro"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| private_subnet_ids                 | `dependency.vpc.outputs.private_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| public_subnet_ids                  | `dependency.vpc.outputs.public_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| vpc_id                             | `dependency.vpc.outputs.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
+
+## /dev Inputs
+
+## /vpc/terragrunt.hcl Inputs:
+| Name                       | Input               |
+|----------------------------|---------------------|
+| env                        | `include.env.locals.env`         |
+| azs                        | `["ap-south-1a", "ap-south-1b"]`   |
+| vpc_cidr_block             | `"126.22.0.0/16" `   |
+| private_subnet_cidr_blocks | `["126.22.0.64/26", "126.22.0.128/26"]` |
+| public_subnet_cidr_blocks  | `["126.22.2.64/26", "126.22.2.128/26"]` |
+| private_subnet_tags        | `{    Description = "This is a public subnet connected to internet gateway"  }`                |
+| public_subnet_tags         | `{    Description = "This is a private subnet not connected to the internet gateway"  }`                |
 
 
 ### Instances Inputs:
 
 | Name                               | Input                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| env                                | `local.env`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| env                                | `include.env.locals.env`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ami_id                             | `"ami-06b72b3b2a773be2b"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | instance_type                      | `"t2.micro"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| private_subnet_ids                 | `module.vpc.private_subnet_ids `                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| public_subnet_ids                  | `module.vpc.public_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| vpc_id                             | `module.vpc.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| private_subnet_ids                 | `dependency.vpc.outputs.private_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| public_subnet_ids                  | `dependency.vpc.outputs.public_subnet_ids`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| vpc_id                             | `dependency.vpc.outputs.vpc_id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | public_sg_ingress_with_cidr_blocks | <pre>public_sg_ingress_with_cidr_blocks = [<br>{<br/>&emsp;from_port=22<br/>&emsp;to_port=22<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["120.42.44.12/32"]<br/>},<br>{<br/>&emsp;from_port=80<br>&emsp;to_port = 80<br>&emsp;protocol = "tcp"<br>&emsp;cidr_blocks = ["0.0.0.0/0"]<br>&emsp;ipv6_cidr_blocks=["::/0"]<br>},<br/>{<br/>&emsp;from_port=443<br/>&emsp;to_port=443<br/>&emsp;protocol="tcp"<br/>&emsp;cidr_blocks=["0.0.0.0/0"]<br/>&emsp;ipv6_cidr_blocks=["::/0"]<br/>&emsp;}<br>]</pre> |
-
