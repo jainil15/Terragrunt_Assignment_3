@@ -57,7 +57,22 @@ environments
               terragrunt.hcl
 </pre>
 
-Repeat for Other Environments: Repeat the above steps for each environment you want to deploy.
+**Use Terragrunt Configuration:** In environments directory, create a terragrunt.hcl file to specify Terragrunt configuration, such as remote state settings, backend configuration for all environments.
+
+**Deploy Environment:** To deploy a specific environment, navigate to its directory and run Terragrunt commands such as `terragrunt init`, `terragrunt plan`, and `terragrunt apply`.
+```bash
+cd prod/
+terragrunt init
+terragrunt plan
+terragrunt apply
+```
+To deploy all environment at once:
+```bash
+cd environment
+terragrunt run-all init
+terragrunt run-all plan
+terragrunt run-all apply
+```
 
 ## Requirements
 | Name      | Version |
